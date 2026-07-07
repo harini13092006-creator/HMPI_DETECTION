@@ -4,3 +4,28 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
+packages = ["freetype", "glibcLocales"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "HMPI Dashboard"
+
+[[workflows.workflow]]
+name = "HMPI Dashboard"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && echo '' | streamlit run app.py --server.port 5000 --server.address 0.0.0.0 --server.headless true --browser.gatherUsageStats false"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
